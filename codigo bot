@@ -1,0 +1,39 @@
+import discord
+from discord.ext import commands
+import os 
+import random
+
+
+intents = discord.Intents.default()
+
+intents.message_content = True
+
+Bot = commands.Bot (command_prefix = "$" ,intents=intents)
+
+@Bot.event
+async def on_ready():
+    print(f'Hemos iniciado sesión como {Bot.user}')
+
+@Bot.command()
+async def informacion(ctx):
+    await ctx.send("Este bot esta creado para informar acerca de practicas de contaminaciona las personas que quieren aprender a cuidar el planeta de forma mas simple y estando informados")
+
+@Bot.command()
+async def explicacion(ctx):
+    await ctx.send("algunas practicas que puedes hacer para reciclar y cuidar al planeta serian el reciclar de manera simple algunas cosas que tiras, leer articulos de internet para informarte acerca del tema, cultivar arboles y plantas para aumentar la poblacion de plantas entre muchas otras practicas que puedes investigar")
+
+@Bot.command()
+async def Help(ctx):
+    await ctx.send("$informacion $explicacion $imagen_ejemplo")
+
+@Bot.command()
+async def imagen_ejemplo(ctx):
+    img_eco = random.choice(os.listdir("images"))
+    
+    with open(f'imageseco/{img_eco}', 'rb') as f:
+        # ¡Vamos a almacenar el archivo de la biblioteca Discord convertido en esta variable!
+        picture = discord.File(f)
+    # A continuación, podemos enviar este archivo como parámetro.
+    await ctx.send(file=picture)
+
+Bot.run()
